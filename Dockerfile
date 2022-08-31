@@ -8,5 +8,7 @@ USER spring:spring
 ARG JAR_FILE=build/libs/*-SNAPSHOT.jar
 # Copy the JAR
 COPY ${JAR_FILE} app.jar
+# Expose Port
+EXPOSE 8080
 # Set ENTRYPOINT in exec form to run the container as an executable
 ENTRYPOINT ["java","-jar","/app.jar"]
