@@ -1,6 +1,8 @@
 package com.avisoftwares.dbproxy.stores;
 
 import com.avisoftwares.dbproxy.stores.exceptions.UnknownStoreException;
+import com.avisoftwares.dbproxy.stores.sql.AuroraStore;
+import com.avisoftwares.dbproxy.stores.sql.RedshiftStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.avisoftwares.dbproxy.stores;
+package com.avisoftwares.dbproxy.stores.sql;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
