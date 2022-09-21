@@ -7,7 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 import java.util.Map;
 
-public abstract class SQLDatabaseStore extends AbstractStore {
+public abstract class SQLDatabaseStore extends Store {
+
     @Override
     public DatabaseStoreResult executeAction(StoreAction action) {
         String queryType = action.getOperator();
