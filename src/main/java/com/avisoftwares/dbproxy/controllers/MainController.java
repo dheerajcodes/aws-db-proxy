@@ -32,7 +32,7 @@ public class MainController {
             ArrayList<String> errors = new ArrayList<>();
             errors.add("\"" + ex.getMessage() + "\"");
             for (Throwable e = ex.getCause(); e != null; e = e.getCause()) {
-                errors.add("\"" + ex.getMessage() + "\"");
+                errors.add("\"" + e.getMessage() + "\"");
             }
             result = () -> "{\"error\":" + errors + "}";
         }

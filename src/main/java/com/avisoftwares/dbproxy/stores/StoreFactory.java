@@ -14,12 +14,12 @@ import java.util.Map;
 public class StoreFactory {
     private static final Map<String, Class<? extends Store>> registeredStores;
     public static final String STORE_KEY_REDSHIFT = "redshift";
-    public static final String STORE_KEY__AURORA = "aurora";
+    public static final String STORE_KEY_AURORA = "aurora";
 
     static {
         registeredStores = new HashMap<>();
         registeredStores.put(STORE_KEY_REDSHIFT, RedshiftStore.class);
-        registeredStores.put(STORE_KEY__AURORA, AuroraStore.class);
+        registeredStores.put(STORE_KEY_AURORA, AuroraStore.class);
         // Register more stores here
     }
 
