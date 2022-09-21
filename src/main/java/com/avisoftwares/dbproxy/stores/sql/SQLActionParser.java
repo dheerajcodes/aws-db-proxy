@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class SQLActionParser {
     private final String operator;
+    private final String aggregate;
     private final String columns;
     private final String table;
     private final String joins;
@@ -22,6 +23,7 @@ public class SQLActionParser {
 
     public SQLActionParser(StoreAction action, int defaultLimit) {
         this.operator = getValueOrDefault(action.getOperator(), "");
+        this.aggregate = getValueOrDefault(action.getAggregate(), "");
         this.columns = getValueOrDefault(action.getProjection(), "");
         this.table = getValueOrDefault(action.getResource(), "");
         this.joins = getValueOrDefault(action.getJoin(), "");
@@ -39,7 +41,7 @@ public class SQLActionParser {
         if (!queryString.equals("")) return queryString;
         ArrayList<String> clauses = new ArrayList<>();
         clauses.add(getValueOrDefault(this.operator, "SELECT"));
-        clauses.add(getValueOrDefault(this.columns, "*"));
+        clauses.add(getColumns());
         clauses.add("FROM");
         if (this.table.equals("")) {
             throw new ActionParserException("request did not specify the target table in 'resource' key ");
@@ -60,15 +62,22 @@ public class SQLActionParser {
         return value == null || value.trim().equals("") ? defaultValue : value;
     }
 
+    private String getColumns() {
+        ArrayList<String> cols = new ArrayList<>();
+        if (!aggregate.equals("")) cols.add(aggregate);
+        if (!columns.equals("")) cols.add(columns);
+        return getValueOrDefault(String.join(",", cols), "*");
+    }
+
     private String getJoins() {
         if (this.joins.equals("")) return "";
-        // Format for Joins - Comma-Separated list of four space-separated values -
-        // join-type, join table, column of join table, column of main table
-        // e.g. INNER <table-1> <col-table-1> <col-main-table>, OUTER <table-2> <col-table-2> <col-main-table>, ..,. and so on.
-        String[] joins = this.joins.trim().split("\\s*,\\s*");
+        // Format for Joins - Semicolon-delimited list of four comma-separated values -
+        // join-type,join table,column of join table,column of main table
+        // e.g. INNER,<table-1>,<col-table-1>,<col-main-table>;OUTER,<table-2>,<col-table-2>,<col-main-table>; ... and so on.
+        String[] joins = this.joins.trim().split("\\s*;\\s*");
         ArrayList<String> joinClauseList = new ArrayList<>();
         for (String join : joins) {
-            String[] parts = join.split("\\s+"); // Assuming table/column names don't contain spaces
+            String[] parts = join.split("\\s*,\\s*");
             if (parts.length != 4) {
                 throw new ActionParserException("invalid 'join' in request - " + this.joins);
             }
@@ -98,7 +107,7 @@ public class SQLActionParser {
     }
 
     private String getHavingConditions() {
-        if (this.having.equals("")) return "";
+        if (getGroupBy().equals("") || this.having.equals("")) return "";
         return "HAVING " + this.having;
     }
 

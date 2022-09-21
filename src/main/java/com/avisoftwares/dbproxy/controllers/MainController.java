@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -27,7 +29,12 @@ public class MainController {
             result = storeFactory.getStore(action.getStore()).executeAction(action);
         } catch (Exception ex) {
             ex.printStackTrace();
-            result = () -> "{\"error\":\"" + ex.getMessage() + "\"}";
+            ArrayList<String> errors = new ArrayList<>();
+            errors.add("\"" + ex.getMessage() + "\"");
+            for (Throwable e = ex.getCause(); e != null; e = e.getCause()) {
+                errors.add("\"" + ex.getMessage() + "\"");
+            }
+            result = () -> "{\"error\":" + errors + "}";
         }
         return new ResponseEntity<>(result.toJSON(), HttpStatus.OK);
     }
