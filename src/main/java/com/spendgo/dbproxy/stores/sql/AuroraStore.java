@@ -1,20 +1,21 @@
 package com.spendgo.dbproxy.stores.sql;
 
 import com.spendgo.dbproxy.stores.RegisterStore;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
-@Component
 @RegisterStore(storeId = "aurora")
 public final class AuroraStore extends SQLDatabaseStore {
-    @Autowired
-    @Qualifier("jdbcAurora")
-    private JdbcTemplate jdbcTemplate;
+    private static final String KEY_TEMPLATE_BEAN = "jdbcAurora";
+    private final JdbcTemplate jdbcTemplate;
+
+    public AuroraStore(ApplicationContext context) {
+        super(context);
+        this.jdbcTemplate = context.getBean(KEY_TEMPLATE_BEAN, JdbcTemplate.class);
+    }
 
     @Override
     protected JdbcTemplate getTemplate() {
-        return jdbcTemplate;
+        return this.jdbcTemplate;
     }
 }

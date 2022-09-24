@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -34,11 +35,12 @@ public class StoreFactory {
     @Autowired
     private ApplicationContext context;
 
-    public Store getStore(String storeKey) throws UnknownStoreException {
+    public Store getStore(String storeKey) throws Exception {
         Class<? extends Store> storeClass = registeredStores.get(storeKey);
         if (storeClass == null) {
             throw new UnknownStoreException(storeKey);
         }
-        return context.getBean(storeClass);
+        Constructor<? extends Store> constructor = storeClass.getConstructor(ApplicationContext.class);
+        return constructor.newInstance(context);
     }
 }

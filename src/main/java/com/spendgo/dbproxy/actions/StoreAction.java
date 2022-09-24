@@ -1,5 +1,6 @@
 package com.spendgo.dbproxy.actions;
 
+
 public class StoreAction {
     private String store;
     private String operator;
