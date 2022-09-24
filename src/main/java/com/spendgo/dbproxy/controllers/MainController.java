@@ -1,9 +1,9 @@
-package com.avisoftwares.dbproxy.controllers;
+package com.spendgo.dbproxy.controllers;
 
-import com.avisoftwares.dbproxy.actions.ActionBuilder;
-import com.avisoftwares.dbproxy.actions.StoreAction;
-import com.avisoftwares.dbproxy.results.StoreResult;
-import com.avisoftwares.dbproxy.stores.StoreFactory;
+import com.spendgo.dbproxy.actions.ActionBuilder;
+import com.spendgo.dbproxy.actions.StoreAction;
+import com.spendgo.dbproxy.results.StoreResult;
+import com.spendgo.dbproxy.stores.StoreFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;

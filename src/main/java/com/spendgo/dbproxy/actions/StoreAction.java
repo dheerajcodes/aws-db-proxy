@@ -1,4 +1,4 @@
-package com.avisoftwares.dbproxy.actions;
+package com.spendgo.dbproxy.actions;
 
 public class StoreAction {
     private String store;

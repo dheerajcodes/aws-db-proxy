@@ -1,4 +1,4 @@
-package com.avisoftwares.dbproxy.stores.exceptions;
+package com.spendgo.dbproxy.stores.exceptions;
 
 public class UnknownStoreException extends RuntimeException {
     public UnknownStoreException(String storeKey) {

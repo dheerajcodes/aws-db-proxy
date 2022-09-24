@@ -1,8 +1,8 @@
-package com.avisoftwares.dbproxy.stores.sql;
+package com.spendgo.dbproxy.stores.sql;
 
-import com.avisoftwares.dbproxy.actions.StoreAction;
-import com.avisoftwares.dbproxy.results.DatabaseStoreResult;
-import com.avisoftwares.dbproxy.stores.Store;
+import com.spendgo.dbproxy.actions.StoreAction;
+import com.spendgo.dbproxy.results.DatabaseStoreResult;
+import com.spendgo.dbproxy.stores.Store;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 

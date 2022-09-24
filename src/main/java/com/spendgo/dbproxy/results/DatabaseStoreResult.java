@@ -1,4 +1,4 @@
-package com.avisoftwares.dbproxy.results;
+package com.spendgo.dbproxy.results;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

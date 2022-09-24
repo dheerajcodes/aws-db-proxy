@@ -1,7 +1,7 @@
-package com.avisoftwares.dbproxy.stores.sql;
+package com.spendgo.dbproxy.stores.sql;
 
-import com.avisoftwares.dbproxy.actions.StoreAction;
-import com.avisoftwares.dbproxy.stores.sql.exceptions.ActionParserException;
+import com.spendgo.dbproxy.actions.StoreAction;
+import com.spendgo.dbproxy.stores.sql.exceptions.ActionParserException;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.avisoftwares.dbproxy.stores.sql.exceptions;
+package com.spendgo.dbproxy.stores.sql.exceptions;
 
 public class ActionParserException extends RuntimeException {
     public ActionParserException(String message) {

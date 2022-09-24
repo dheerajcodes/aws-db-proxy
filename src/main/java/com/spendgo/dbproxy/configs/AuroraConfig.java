@@ -1,4 +1,4 @@
-package com.avisoftwares.dbproxy.configs;
+package com.spendgo.dbproxy.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,17 +11,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-public class RedshiftConfig {
+public class AuroraConfig {
 
-    @Bean(name = "redshift")
-    @ConfigurationProperties(prefix = "aws.redshift")
-    public DataSource redshiftDataSource() {
+    @Bean(name = "aurora")
+    @ConfigurationProperties(prefix = "aws.aurora")
+    public DataSource auroraDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "jdbcRedshift")
+    @Bean(name = "jdbcAurora")
     @Autowired
-    public JdbcTemplate redshiftJdbcTemplate(@Qualifier("redshift") DataSource redshiftDataSource) {
-        return new JdbcTemplate(redshiftDataSource);
+    public JdbcTemplate auroraJdbcTemplate(@Qualifier("aurora") DataSource auroraDataSource) {
+        return new JdbcTemplate(auroraDataSource);
     }
 }
