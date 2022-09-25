@@ -34,7 +34,7 @@ public abstract class Store {
 
     public abstract StoreResult executeAction();
 
-    protected abstract String getDefaultLimitPropertyKey();
+    protected abstract String getPropertiesSubKey();
 
     public void setDefaultLimit(int limit) {
         this.defaultLimit = limit;
@@ -45,6 +45,6 @@ public abstract class Store {
     }
 
     private String getDefaultLimitKey() {
-        return String.join(".", BASE_PROPERTIES_KEY, getDefaultLimitPropertyKey());
+        return String.join(".", BASE_PROPERTIES_KEY, getPropertiesSubKey(), "limit");
     }
 }

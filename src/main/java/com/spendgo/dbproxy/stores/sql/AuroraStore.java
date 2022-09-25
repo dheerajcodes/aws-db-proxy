@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @RegisterStore(storeId = "aurora")
 public final class AuroraStore extends SQLDatabaseStore {
-    private final static String BASE_PROPERTIES_KEY = "aurora";
     private static final String KEY_TEMPLATE_BEAN = "jdbcAurora";
     private final JdbcTemplate jdbcTemplate;
 
@@ -18,8 +17,8 @@ public final class AuroraStore extends SQLDatabaseStore {
     }
 
     @Override
-    protected String getDefaultLimitPropertyKey() {
-        return String.join(".", super.getDefaultLimitPropertyKey(), BASE_PROPERTIES_KEY, "limit");
+    protected String getPropertiesSubKey() {
+        return String.join(".", super.getPropertiesSubKey(), "aurora");
     }
 
     @Override
