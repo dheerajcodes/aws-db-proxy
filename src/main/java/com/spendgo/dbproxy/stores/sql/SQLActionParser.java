@@ -71,26 +71,30 @@ public class SQLActionParser {
 
     private String getJoins() {
         if (this.joins.equals("")) return "";
-        // Format for Joins - Semicolon-delimited list of four comma-separated values -
-        // join-type,join table,column of join table,column of main table
-        // e.g. INNER,<table-1>,<col-table-1>,<col-main-table>;OUTER,<table-2>,<col-table-2>,<col-main-table>; ... and so on.
+        // Format for Joins -> Semicolon-delimited list of six comma-separated values -
+        // join-type,join table, join table column,column of main table
+        // e.g. INNER,<table-1>,<col-table-1>,<table-2>,<col-table-2>,<operator>;LEFT,<table-1>,<col-table-1>,<table-2>,<col-table-2>,<operator>; ... and so on.
+        // NOTE: If <operator> is not provided, then equals (=) is assumed.
         String[] joins = this.joins.trim().split("\\s*;\\s*");
         ArrayList<String> joinClauseList = new ArrayList<>();
         for (String join : joins) {
             String[] parts = join.split("\\s*,\\s*");
-            if (parts.length != 4) {
+            if (parts.length < 5 || parts.length > 6) {
                 throw new ActionParserException("invalid 'join' in request - " + this.joins);
             }
+            String operator = parts.length == 6 ? parts[5] : "=";
             String joinClause = parts[0] + " JOIN " +
                     parts[1] +
                     " ON " +
                     parts[1] +
                     "." +
                     parts[2] +
-                    " = " +
-                    this.table +
+                    " " +
+                    operator +
+                    " " +
+                    parts[3] +
                     "." +
-                    parts[3];
+                    parts[4];
             joinClauseList.add(joinClause);
         }
         return String.join(",", joinClauseList);
