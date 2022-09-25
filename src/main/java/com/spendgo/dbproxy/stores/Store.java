@@ -6,6 +6,8 @@ import com.spendgo.dbproxy.stores.exceptions.StorePropertyException;
 import org.springframework.context.ApplicationContext;
 
 public abstract class Store {
+
+    private final static String BASE_PROPERTIES_KEY = "store";
     protected ApplicationContext context;
     private final StoreAction action;
 
@@ -14,7 +16,7 @@ public abstract class Store {
     public Store(ApplicationContext context, StoreAction action) {
         this.context = context;
         this.action = action;
-        String limitKey = getDefaultLimitPropertyKey();
+        String limitKey = getDefaultLimitKey();
         String limitValue = context.getEnvironment().getProperty(limitKey, "");
         if (limitValue.equals("")) {
             throw new StorePropertyException(limitKey, "default limit must be provided for sql results");
@@ -40,5 +42,9 @@ public abstract class Store {
 
     public int getDefaultLimit() {
         return this.defaultLimit;
+    }
+
+    private String getDefaultLimitKey() {
+        return String.join(".", BASE_PROPERTIES_KEY, getDefaultLimitPropertyKey());
     }
 }

@@ -7,9 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @RegisterStore(storeId = "redshift")
 public final class RedshiftStore extends SQLDatabaseStore {
+    private final static String BASE_PROPERTIES_KEY = "redshift";
     private static final String KEY_TEMPLATE_BEAN = "jdbcRedshift";
     private final JdbcTemplate jdbcTemplate;
-    private static final String KEY_PROPERTY_LIMIT = "store.sql.redshift.limit";
 
     public RedshiftStore(ApplicationContext context, StoreAction action) {
         super(context, action);
@@ -18,7 +18,7 @@ public final class RedshiftStore extends SQLDatabaseStore {
 
     @Override
     protected String getDefaultLimitPropertyKey() {
-        return KEY_PROPERTY_LIMIT;
+        return String.join(".", super.getDefaultLimitPropertyKey(), BASE_PROPERTIES_KEY, "limit");
     }
 
     @Override
