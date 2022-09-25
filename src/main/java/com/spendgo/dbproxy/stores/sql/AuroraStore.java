@@ -9,14 +9,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public final class AuroraStore extends SQLDatabaseStore {
     private static final String KEY_TEMPLATE_BEAN = "jdbcAurora";
     private final JdbcTemplate jdbcTemplate;
+    private static final String KEY_PROPERTY_LIMIT = "store.sql.aurora.limit";
 
     public AuroraStore(ApplicationContext context, StoreAction action) {
         super(context, action);
         this.jdbcTemplate = context.getBean(KEY_TEMPLATE_BEAN, JdbcTemplate.class);
+
+    }
+
+    @Override
+    protected String getDefaultLimitPropertyKey() {
+        return KEY_PROPERTY_LIMIT;
     }
 
     @Override
     protected JdbcTemplate getTemplate() {
         return this.jdbcTemplate;
     }
+
 }
