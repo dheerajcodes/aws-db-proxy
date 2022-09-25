@@ -34,7 +34,7 @@ public class MainController {
             for (Throwable e = ex.getCause(); e != null; e = e.getCause()) {
                 errors.add("\"" + e.getMessage() + "\"");
             }
-            result = () -> "{\"error\":" + errors + "}";
+            result = () -> "{\"errors\":" + errors + "}";
         }
         return new ResponseEntity<>(result.toJSON(), HttpStatus.OK);
     }

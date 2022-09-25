@@ -40,6 +40,9 @@ public class SQLActionParser {
     public String getQuery() throws ActionParserException {
         if (!queryString.equals("")) return queryString;
         ArrayList<String> clauses = new ArrayList<>();
+        if (!this.operator.trim().equalsIgnoreCase("select")) {
+            throw new ActionParserException("unsupported operator - " + this.operator);
+        }
         clauses.add(getValueOrDefault(this.operator, "SELECT"));
         clauses.add(getColumns());
         clauses.add("FROM");
