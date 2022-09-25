@@ -4,6 +4,8 @@ import com.spendgo.dbproxy.actions.StoreAction;
 import com.spendgo.dbproxy.stores.exceptions.DuplicateStoreIdException;
 import com.spendgo.dbproxy.stores.exceptions.UnknownStoreException;
 import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -20,10 +22,16 @@ public class StoreFactory {
     static {
         // Find and register all stores classes
         registeredStores = new HashMap<>();
-        Reflections reflections = new Reflections(StoreFactory.class.getPackage().getName());
+        Reflections reflections = new Reflections(
+                new ConfigurationBuilder()
+                        .setClassLoaders(new ClassLoader[]{
+                                StoreFactory.class.getClassLoader()
+                        })
+                        .setUrls(ClasspathHelper.forPackage(StoreFactory.class.getPackage().getName()))
+        );
         Set<Class<? extends Store>> storeClasses = reflections.getSubTypesOf(Store.class);
         for (Class<? extends Store> storeClass : storeClasses) {
-            RegisterStore annotation = storeClass.getDeclaredAnnotation(RegisterStore.class);
+            RegisterStore annotation = storeClass.getAnnotation(RegisterStore.class);
             if (annotation == null) continue;
             String storeId = annotation.storeId();
             if (registeredStores.containsKey(storeId)) {
