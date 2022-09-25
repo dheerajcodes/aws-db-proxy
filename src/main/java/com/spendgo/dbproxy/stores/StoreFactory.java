@@ -1,5 +1,6 @@
 package com.spendgo.dbproxy.stores;
 
+import com.spendgo.dbproxy.actions.StoreAction;
 import com.spendgo.dbproxy.stores.exceptions.DuplicateStoreIdException;
 import com.spendgo.dbproxy.stores.exceptions.UnknownStoreException;
 import org.reflections.Reflections;
@@ -35,12 +36,13 @@ public class StoreFactory {
     @Autowired
     private ApplicationContext context;
 
-    public Store getStore(String storeKey) throws Exception {
+    public Store getStoreForAction(StoreAction action) throws Exception {
+        String storeKey = action.getStore();
         Class<? extends Store> storeClass = registeredStores.get(storeKey);
         if (storeClass == null) {
             throw new UnknownStoreException(storeKey);
         }
-        Constructor<? extends Store> constructor = storeClass.getConstructor(ApplicationContext.class);
-        return constructor.newInstance(context);
+        Constructor<? extends Store> constructor = storeClass.getConstructor(ApplicationContext.class, StoreAction.class);
+        return constructor.newInstance(context, action);
     }
 }

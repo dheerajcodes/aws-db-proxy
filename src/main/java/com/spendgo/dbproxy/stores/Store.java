@@ -6,10 +6,16 @@ import org.springframework.context.ApplicationContext;
 
 public abstract class Store {
     protected ApplicationContext context;
+    private final StoreAction action;
 
-    public Store(ApplicationContext context) {
+    public Store(ApplicationContext context, StoreAction action) {
         this.context = context;
+        this.action = action;
     }
 
-    public abstract StoreResult executeAction(StoreAction action);
+    protected StoreAction getAction() {
+        return this.action;
+    }
+
+    public abstract StoreResult executeAction();
 }

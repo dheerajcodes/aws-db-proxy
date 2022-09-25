@@ -14,8 +14,8 @@ public abstract class SQLDatabaseStore extends Store {
     private static final String KEY_PROPERTY_LIMIT = "store.sql.limit";
     private int defaultLimit;
 
-    public SQLDatabaseStore(ApplicationContext context) {
-        super(context);
+    public SQLDatabaseStore(ApplicationContext context, StoreAction action) {
+        super(context, action);
         String limitValue = context.getEnvironment().getProperty(KEY_PROPERTY_LIMIT, "");
         if (limitValue.equals("")) {
             throw new StorePropertyException(KEY_PROPERTY_LIMIT, "default limit must be provided for sql results");
@@ -28,9 +28,9 @@ public abstract class SQLDatabaseStore extends Store {
     }
 
     @Override
-    public DatabaseStoreResult executeAction(StoreAction action) {
+    public DatabaseStoreResult executeAction() {
         JdbcTemplate template = getTemplate();
-        SQLActionParser actionParser = new SQLActionParser(action, defaultLimit);
+        SQLActionParser actionParser = new SQLActionParser(getAction(), defaultLimit);
         List<Map<String, Object>> result = template.queryForList(actionParser.getQuery());
         return new DatabaseStoreResult(result);
     }

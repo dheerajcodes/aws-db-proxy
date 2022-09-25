@@ -26,7 +26,7 @@ public class MainController {
         try {
             ActionBuilder actionBuilder = new ActionBuilder(request.getBody());
             StoreAction action = actionBuilder.build();
-            result = storeFactory.getStore(action.getStore()).executeAction(action);
+            result = storeFactory.getStoreForAction(action).executeAction();
         } catch (Exception ex) {
             ex.printStackTrace();
             ArrayList<String> errors = new ArrayList<>();
