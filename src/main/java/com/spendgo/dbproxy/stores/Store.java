@@ -19,7 +19,7 @@ public abstract class Store {
         String limitKey = getDefaultLimitKey();
         String limitValue = context.getEnvironment().getProperty(limitKey, "");
         if (limitValue.equals("")) {
-            throw new StorePropertyException(limitKey, "default limit must be provided for sql results");
+            throw new StorePropertyException(limitKey, "default limit must be provided for store results");
         }
         try {
             this.defaultLimit = Integer.parseInt(limitValue);
