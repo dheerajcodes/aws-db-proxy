@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-public class MainController {
+public class StoreController {
     @Autowired
     StoreFactory storeFactory;
 
