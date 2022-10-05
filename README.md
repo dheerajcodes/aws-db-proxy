@@ -12,3 +12,8 @@ This is an API server written for querying AWS Aurora RDS and Redshift data stor
 * `REDSHIFT_DB` - AWS Redshift Warehouse database
 * `REDSHIFT_USERNAME` - AWS Redshift Warehouse master username
 * `REDSHIFT_PASSWORD` - AWS Redshift Warehouse master password
+* `H2_USERNAME` - H2 Auth database username
+* `H2_PASSWORD` - H2 Auth database password
+* `ADMIN_USERNAME` - Username for admin user
+* `ADMIN_PASSWORD` - Password for admin user
+* `SHARED_SECRET` - Shared secret key used for response/request encryption/decryption
